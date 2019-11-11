@@ -30,9 +30,11 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (stopwatch.isRunning()) {
+                    stopwatch.stop();
                     startButton.setText(R.string.start);
                     handler.removeCallbacks(stopwatchRunnable);
                 } else {
+                    stopwatch.start();
                     startButton.setText(R.string.stop);
                     handler.post(stopwatchRunnable);
                 }
