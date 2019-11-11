@@ -1,6 +1,5 @@
 package me.henriquerocha.android.stopwatch;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -8,10 +7,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
     private final Runnable stopwatchRunnable = new StopwatchRunnable();
     private final Stopwatch stopwatch = new Stopwatch();
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
                     stopwatch.start();
                     startButton.setText(R.string.stop);
                     resetButton.setVisibility(View.VISIBLE);
-                    handler.post(stopwatchRunnable);
+                    handler.postDelayed(stopwatchRunnable, 30);
                 }
             }
         });
@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
             String format = selectFormat(minutes, seconds);
             stopwatchTextView.setText(format);
             millisTextView.setText(String.format(Locale.getDefault(), "%02d", millis));
-            handler.post(this);
+            handler.postDelayed(this, 30);
         }
 
         private String selectFormat(long minutes, long seconds) {
