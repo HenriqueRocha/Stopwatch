@@ -3,10 +3,11 @@ package me.henriquerocha.android.stopwatch;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 public class MainActivity extends Activity {
     private final Handler handler = new Handler();
