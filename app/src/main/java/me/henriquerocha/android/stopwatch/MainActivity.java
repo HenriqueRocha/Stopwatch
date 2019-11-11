@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
     private final Stopwatch stopwatch = new Stopwatch();
 
     private TextView stopwatchTextView;
+    private TextView millisTextView;
     private Button startButton;
     private Button resetButton;
 
@@ -50,15 +51,22 @@ public class MainActivity extends Activity {
                 startButton.setText(R.string.start);
                 resetButton.setVisibility(View.GONE);
                 handler.removeCallbacks(stopwatchRunnable);
-                stopwatchTextView.setText(R.string.zero);
+                resetTextViews();
             }
         });
+
     }
 
     private void bindViews() {
         stopwatchTextView = findViewById(R.id.stopwatchTextView);
+        millisTextView = findViewById(R.id.millisTextView);
         startButton = findViewById(R.id.startStopButton);
         resetButton = findViewById(R.id.resetButton);
+    }
+
+    private void resetTextViews() {
+        stopwatchTextView.setText(R.string.zero);
+        millisTextView.setText(R.string.zero_zero);
     }
 
     private class StopwatchRunnable implements Runnable {
@@ -68,17 +76,18 @@ public class MainActivity extends Activity {
             long minutes = elapsedMillis / 1000 / 60;
             long seconds = elapsedMillis / 1000 % 60;
             long millis = elapsedMillis % 1000 / 10;
-            String format = selectFormat(minutes, seconds, millis);
+            String format = selectFormat(minutes, seconds);
             stopwatchTextView.setText(format);
+            millisTextView.setText(String.format(Locale.getDefault(), "%02d", millis));
             handler.post(this);
         }
 
-        private String selectFormat(long minutes, long seconds, long millis) {
+        private String selectFormat(long minutes, long seconds) {
             Locale locale = Locale.getDefault();
             if (minutes == 0) {
-                return String.format(locale, "%d %02d", seconds, millis);
+                return String.format(locale, "%d", seconds);
             }
-            return String.format(locale, "%d:%d %02d", minutes, seconds, millis);
+            return String.format(locale, "%d:%02d", minutes, seconds);
         }
     }
 }
