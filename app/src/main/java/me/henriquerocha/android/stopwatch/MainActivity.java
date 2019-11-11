@@ -3,7 +3,6 @@ package me.henriquerocha.android.stopwatch;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +12,6 @@ public class MainActivity extends Activity {
     private final Handler handler = new Handler();
     private final Runnable stopwatchRunnable = new StopwatchRunnable();
     private final Stopwatch stopwatch = new Stopwatch();
-
-    final long initialTime = SystemClock.elapsedRealtime();
 
     private TextView stopwatchTextView;
     private Button startButton;
@@ -50,8 +47,7 @@ public class MainActivity extends Activity {
     private class StopwatchRunnable implements Runnable {
         @Override
         public void run() {
-            long elapsedRealtime = SystemClock.elapsedRealtime();
-            stopwatchTextView.setText(String.valueOf(elapsedRealtime - initialTime));
+            stopwatchTextView.setText(String.valueOf(stopwatch.elapsedMillis()));
             handler.post(this);
         }
     }
