@@ -17,18 +17,22 @@ public class MainActivity extends Activity {
 
     private boolean isRunning;
 
+    private TextView stopwatchTextView;
+    private Button startButton;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button startButton = findViewById(R.id.startStopButton);
+        bindViews();
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isRunning) {
-                   startButton.setText(R.string.start);
-                   handler.removeCallbacks(stopwatchRunnable);
+                    startButton.setText(R.string.start);
+                    handler.removeCallbacks(stopwatchRunnable);
                 } else {
                     startButton.setText(R.string.stop);
                     handler.post(stopwatchRunnable);
@@ -38,10 +42,14 @@ public class MainActivity extends Activity {
         });
     }
 
+    private void bindViews() {
+        stopwatchTextView = findViewById(R.id.stopwatchTextView);
+        startButton = findViewById(R.id.startStopButton);
+    }
+
     private class StopwatchRunnable implements Runnable {
         @Override
         public void run() {
-            TextView stopwatchTextView = findViewById(R.id.stopwatchTextView);
             long elapsedRealtime = SystemClock.elapsedRealtime();
             stopwatchTextView.setText(String.valueOf(elapsedRealtime - initialTime));
             handler.post(this);
