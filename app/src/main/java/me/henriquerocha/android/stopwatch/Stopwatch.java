@@ -44,4 +44,13 @@ class Stopwatch {
     long elapsedMillis() {
         return SystemClock.elapsedRealtime() - start;
     }
+
+    /**
+     * Resets the elapsed count to zero.
+     */
+    void reset() {
+        start = 0;
+        stop = 0;
+        isRunning = false;
+    }
 }
