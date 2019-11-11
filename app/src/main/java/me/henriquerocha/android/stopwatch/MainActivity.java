@@ -12,10 +12,9 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
     private final Handler handler = new Handler();
     private final Runnable stopwatchRunnable = new StopwatchRunnable();
+    private final Stopwatch stopwatch = new Stopwatch();
 
     final long initialTime = SystemClock.elapsedRealtime();
-
-    private boolean isRunning;
 
     private TextView stopwatchTextView;
     private Button startButton;
@@ -30,14 +29,13 @@ public class MainActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isRunning) {
+                if (stopwatch.isRunning()) {
                     startButton.setText(R.string.start);
                     handler.removeCallbacks(stopwatchRunnable);
                 } else {
                     startButton.setText(R.string.stop);
                     handler.post(stopwatchRunnable);
                 }
-                isRunning = !isRunning;
             }
         });
     }
