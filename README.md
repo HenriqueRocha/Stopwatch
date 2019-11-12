@@ -8,6 +8,11 @@ a Flutter based app.
 
 This project will help me test my assumption.
 
+## Java 8 vs Kotlin
+Not much to say here. Using the Android Studio Profiler I did not notice any performance impact
+after changing the code to Kotlin. For that reason I will keep the code in Kotlin and I will not
+use Java anymore in this project.
+
 ## Java 7 vs Java 8
 The first version of the code was written in Java 7.
 Just out of curiosity I wanted to know if changing the code to Java 8 and replacing anonymous 
@@ -23,7 +28,3 @@ a stopwatch but it would require further investigation.
 
 CPU performance in both Java 7 and Java 8 oscillated between 7 and 10% of CPU usage in *debug* mode 
 when updating the screen every 30ms.
-
-
-
-
