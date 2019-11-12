@@ -1,9 +1,0 @@
-Stopwatch
-
-The purpose of this project is to research the performance of a simple stopwatch Android app,
-to be compared to a Flutter based stopwatch.
-
-It is my assumption that a native Java Android application will have more performance than
-a Flutter based app.
-
-This project will help me test my assumption.
