@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private static final long DELAY_MILLIS = 30;
+
     private final Handler handler = new Handler();
     private final Runnable stopwatchRunnable = new StopwatchRunnable();
     private final Stopwatch stopwatch = new Stopwatch();
@@ -28,33 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
         bindViews();
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (stopwatch.isRunning()) {
-                    stopwatch.stop();
-                    startButton.setText(R.string.start);
-                    handler.removeCallbacks(stopwatchRunnable);
-                } else {
-                    stopwatch.start();
-                    startButton.setText(R.string.stop);
-                    resetButton.setVisibility(View.VISIBLE);
-                    handler.postDelayed(stopwatchRunnable, 30);
-                }
-            }
-        });
-
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopwatch.reset();
-                startButton.setText(R.string.start);
-                resetButton.setVisibility(View.GONE);
-                handler.removeCallbacks(stopwatchRunnable);
-                resetTextViews();
-            }
-        });
-
+        startButton.setOnClickListener(v -> onStartPressed());
+        resetButton.setOnClickListener(v -> onResetPressed());
     }
 
     private void bindViews() {
@@ -62,6 +39,27 @@ public class MainActivity extends AppCompatActivity {
         millisTextView = findViewById(R.id.millisTextView);
         startButton = findViewById(R.id.startStopButton);
         resetButton = findViewById(R.id.resetButton);
+    }
+
+    private void onStartPressed() {
+        if (stopwatch.isRunning()) {
+            stopwatch.stop();
+            startButton.setText(R.string.start);
+            handler.removeCallbacks(stopwatchRunnable);
+        } else {
+            stopwatch.start();
+            startButton.setText(R.string.stop);
+            resetButton.setVisibility(View.VISIBLE);
+            handler.postDelayed(stopwatchRunnable, DELAY_MILLIS);
+        }
+    }
+
+    private void onResetPressed() {
+        stopwatch.reset();
+        startButton.setText(R.string.start);
+        resetButton.setVisibility(View.GONE);
+        handler.removeCallbacks(stopwatchRunnable);
+        resetTextViews();
     }
 
     private void resetTextViews() {
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             String format = selectFormat(minutes, seconds);
             stopwatchTextView.setText(format);
             millisTextView.setText(String.format(Locale.getDefault(), "%02d", millis));
-            handler.postDelayed(this, 30);
+            handler.postDelayed(this, DELAY_MILLIS);
         }
 
         private String selectFormat(long minutes, long seconds) {
