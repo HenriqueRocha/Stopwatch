@@ -1,11 +1,12 @@
 package me.henriquerocha.android.stopwatch
 
 import android.os.SystemClock
+import java.io.Serializable
 
 /**
  * A simple stopwatch to measure elapsed time.
  */
-internal class Stopwatch {
+internal class Stopwatch : Serializable {
     /**
      * Whether the Stopwatch is currently running.
      */
@@ -39,7 +40,11 @@ internal class Stopwatch {
      * The elapsed milliseconds.
      */
     fun elapsedMillis(): Long {
-        return SystemClock.elapsedRealtime() - start
+        return if (isRunning) {
+            SystemClock.elapsedRealtime() - start
+        } else {
+            stop - start
+        }
     }
 
     /**
